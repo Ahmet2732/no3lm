@@ -1,24 +1,86 @@
-import logo from './logo.svg';
-import './App.css';
+
+// import Login from './components/login/login';
+// import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+// import { Toaster } from 'react-hot-toast';
+// import UserContextProvider from './Context/userContext';
+// import Home from './components/home/home';
+
+// import CourseGrid from './components/AllCourses/AllCourses';
+
+// import CourseDetailsPage from './components/courseDetails/courseDetails';
+// import Cart from './components/Cart/Cart';
+// import Footer from './components/ui/Footer/Footer';
+
+// let routes = createBrowserRouter([
+
+//     {index:true , element:<Login/>},
+//     {path:"/Home",element:<Home/> },
+
+//     { path:"/CourseGrid",element:<CourseGrid/>   },
+//     { path:"/course/:id",element:<CourseDetailsPage />},
+//     { path:"/Cart",element:<Cart/>},
+//     {path:"/Footer",element:<Footer/>}
+
+//   ] )
+
+// function App() {
+
+
+//   return<> 
+ 
+//   <UserContextProvider>
+
+
+//   <RouterProvider router={routes}>
+
+//     </RouterProvider>  
+//   <Toaster />
+  
+
+//     </UserContextProvider> 
+  
+
+//   </>
+
+// }
+
+// export default App;
+  
+
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import UserContextProvider from './Context/userContext';
+
+
+import Navbar from './components/ui/Navbar/Navbar';
+import Login from './components/login/login';
+import Home from './components/home/home';
+import CourseGrid from './components/AllCourses/AllCourses';
+import CourseDetailsPage from './components/courseDetails/courseDetails';
+import Cart from './components/Cart/Cart';
+import Footer from './components/ui/Footer/Footer';
+import { CartProvider } from './Context/CartContext';
+
+// Define your routes
+let routes = createBrowserRouter([
+  { index: true, element: <Login /> },
+  { path: "/Home", element: <Home /> },
+  { path: "/CourseGrid", element: <CourseGrid /> },
+  { path: "/course/:id", element: <CourseDetailsPage /> },
+  { path: "/Cart", element: <Cart /> },
+  { path: "/Footer", element: <Footer /> }
+]);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContextProvider>
+      <CartProvider>
+      
+        <RouterProvider router={routes} />
+        <Toaster />
+      </CartProvider>
+    </UserContextProvider>
   );
 }
 
