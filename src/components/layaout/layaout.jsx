@@ -5,7 +5,7 @@ import Navbar from '../ui/Navbar/Navbar';
 
 export default function Layaout() {
   return <>
-  <Navbar></Navbar>
+
     <Outlet></Outlet>
     
   </>
