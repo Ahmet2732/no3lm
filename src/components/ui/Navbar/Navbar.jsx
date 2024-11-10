@@ -17,7 +17,6 @@ function Navbar() {
             className="mb-1" 
             style={{ width: '70px', height: '70px', cursor: 'pointer' }} 
           />
-  
         </a>
 
         <button 
@@ -35,7 +34,7 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <a className="nav-link  " href="/Home">Home</a>
+              <a className="nav-link" href="/Home">Home</a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/CourseGrid">Courses</a>
@@ -55,7 +54,6 @@ function Navbar() {
                   position: 'relative'
                 }}
               >
-                {/* Custom SVG Icon */}
                 <svg 
                   stroke="currentColor" 
                   fill="currentColor" 
@@ -71,9 +69,10 @@ function Navbar() {
                 </svg>
 
                 {/* Badge for Cart Items Count */}
-                {cartItems.length > 0 && (
+                
+                {cartItems.length >= 0 && (
                   <span 
-                    className="cart-items-number  bg-danger text-white position-absolute d-flex justify-content-center align-items-center" 
+                    className="cart-items-number bg-danger text-white position-absolute d-flex justify-content-center align-items-center" 
                     style={{
                       top: '-8px',
                       right: '-8px',
@@ -83,6 +82,8 @@ function Navbar() {
                     }}
                   >
                     {cartItems.length}
+
+                    
                   </span>
                 )}
               </a>
@@ -91,7 +92,10 @@ function Navbar() {
         </div>
       </div>
     </nav>
+    
   );
+  
 }
+
 
 export default Navbar;

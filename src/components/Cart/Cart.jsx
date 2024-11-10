@@ -1,13 +1,14 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
+import 'bootstrap-icons/font/bootstrap-icons.css'; // Import Bootstrap Icons
 import Navbar from '../ui/Navbar/Navbar';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [currency, setCurrency] = useState('');
-  const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2Rldi5jaGFtcGlvbnNhY2FkZW15LmNhL2FwaS9kYXNoYm9hcmQvbG9naW4iLCJpYXQiOjE3MzA3MjM3MTEsIm5iZiI6MTczMDcyMzcxMSwianRpIjoiWDFHQmY3aHBKN2p4djRWYSIsInN1YiI6IjE5MjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.VI6pqezNvKVTpm0zQesxU0KCBLXPMgWwYGcFAwNmKZo';
+const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2Rldi5jaGFtcGlvbnNhY2FkZW15LmNhL2FwaS9kYXNoYm9hcmQvbG9naW4iLCJpYXQiOjE3MzA3MjM3MTEsIm5iZiI6MTczMDcyMzcxMSwianRpIjoiWDFHQmY3aHBKN2p4djRWYSIsInN1YiI6IjE5MjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.VI6pqezNvKVTpm0zQesxU0KCBLXPMgWwYGcFAwNmKZo';
 
   useEffect(() => {
     fetchCartItems();
@@ -21,18 +22,51 @@ const Cart = () => {
         }
       });
 
-      // Check if the response is successful and handle the data accordingly
       if (response.data.status) {
-        setCartItems(response.data.data);  // Array of cart items
-        setTotalPrice(response.data.totalPrice);  // Total price from API
-        setCurrency(response.data.user_currency);  // Currency from API
+        setCartItems(response.data.data);
+        setTotalPrice(response.data.totalPrice);
+        setCurrency(response.data.user_currency);
       } else {
         console.error('Error fetching cart items:', response.data);
+        toast.error('Failed to load cart items.');
       }
     } catch (error) {
       console.error('Error fetching cart items:', error);
+      toast.error('An error occurred while loading the cart.');
     }
   };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(`https://dev.championsacademy.ca/api/cart/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      if (response.data.status) {
+        // Filter out the deleted item from cartItems
+        const updatedCartItems = cartItems.filter(item => item.id !== id);
+        
+        // Update the cartItems state
+        setCartItems(updatedCartItems);
+        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+        
+        // Update the total price by subtracting the price of the removed item
+        setTotalPrice(prevTotal => prevTotal - response.data.item_price);
+  
+  
+        toast.success('Item removed from cart successfully.');
+      } else {
+        console.error('Error deleting cart item:', response.data);
+        toast.error('Failed to remove item from cart.');
+      }
+    } catch (error) {
+      console.error('Error deleting cart item:', error);
+      toast.error('An error occurred while deleting the item.');
+    }
+  };
+  
 
   return (
     <>
@@ -61,6 +95,16 @@ const Cart = () => {
                   ) : (
                     <span className="badge bg-success">Available</span>
                   )}
+                  {/* Delete Icon */}
+                  <div className="delete d-flex justify-content-end align-items-end">
+                    <button 
+                      className="btn btn-link text-danger mt-3 p-0"
+                      onClick={() => handleDelete(item.id)}
+                      title="Delete item"
+                    >
+                      <i className="bi bi-trash" style={{ fontSize: '1.5rem' }}></i>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -75,4 +119,3 @@ const Cart = () => {
 };
 
 export default Cart;
-
