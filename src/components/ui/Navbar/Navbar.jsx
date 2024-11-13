@@ -1,14 +1,22 @@
+
 import React, { useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import logo from '../../../Assets/images/logo.a03215d1.png';
 import { CartContext } from '../../../Context/CartContext';
 
+
 function Navbar() {
   const { cartItems } = useContext(CartContext);
 
+  const isLoggedIn = localStorage.getItem('accessToken') !== null;
+
+  if (!isLoggedIn) {
+    return null; 
+  }
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4 p-0 fixed-top">
       <div className="container">
         <a href="/Home" className="navbar-brand d-flex align-items-center">
           <img 
@@ -70,7 +78,7 @@ function Navbar() {
 
                 {/* Badge for Cart Items Count */}
                 
-                {cartItems.length >= 0 && (
+                {cartItems.length >0 ? (
                   <span 
                     className="cart-items-number bg-danger text-white position-absolute d-flex justify-content-center align-items-center" 
                     style={{
@@ -82,20 +90,15 @@ function Navbar() {
                     }}
                   >
                     {cartItems.length}
-
-                    
                   </span>
-                )}
+                ):''}
               </a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    
   );
-  
 }
-
 
 export default Navbar;
