@@ -8,31 +8,39 @@ import imgThree from '../../Assets/images/website-banner-for-online-school-study
 import Carousel from '../ui/cursalPointer';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../ui/Footer/Footer';
+import CarouselFadeExample from '../ui/bannerCursal/bannercursal';
 
 // Carousel Component
-const CarouselFadeExample = () => (
-  <div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel">
-    <div className="carousel-inner w-100">
-      <div className="carousel-item active">
-        <img src={imgTwo} className="d-block w-100" style={{ height: '500px', objectFit: 'cover' }} alt="Slide 1" />
-      </div>
-      <div className="carousel-item">
-        <img src={imgOne} className="d-block w-100" style={{ height: '500px', objectFit: 'cover' }} alt="Slide 2" />
-      </div>
-      <div className="carousel-item">
-        <img src={imgThree} className="d-block w-100" style={{ height: '500px', objectFit: 'cover' }} alt="Slide 3" />
-      </div>
-    </div>
-    <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-      <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span className="visually-hidden">Previous</span>
-    </button>
-    <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-      <span className="carousel-control-next-icon" aria-hidden="true"></span>
-      <span className="visually-hidden">Next</span>
-    </button>
-  </div>
-);
+// const CarouselFadeExample = () => (
+//   <div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel">
+//     <div className="carousel-inner w-100">
+//       <div className="carousel-item active">
+//         <img src={imgTwo} className="d-block w-100" style={{ height: '500px', objectFit: 'cover' }} alt="Slide 1" />
+//       </div>
+//       <div className="carousel-item">
+//         <img src={imgOne} className="d-block w-100" style={{ height: '500px', objectFit: 'cover' }} alt="Slide 2" />
+//       </div>
+//       <div className="carousel-item">
+//         <img src={imgThree} className="d-block w-100" style={{ height: '500px', objectFit: 'cover' }} alt="Slide 3" />
+//       </div>
+//     </div>
+//     <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+//       <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+//       <span className="visually-hidden">Previous</span>
+//     </button>
+//     <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+//       <span className="carousel-control-next-icon" aria-hidden="true"></span>
+//       <span className="visually-hidden">Next</span>
+//     </button>
+//   </div>
+// );
+const images = [
+  imgOne,
+  imgTwo,
+  imgThree
+  // Add more image paths as needed
+];
+
 
 const CourseCard = ({ course }) => (
   <div className="col-md-4 g-3">
@@ -57,8 +65,8 @@ const CourseCard = ({ course }) => (
 
 const CourseSlider = () => {
   const [courses, setCourses] = useState([]);
-  const courseApiUrl = 'https://dev.championsacademy.ca/api/mobile/courses/paginated/list?page=1';
-  const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2Rldi5jaGFtcGlvbnNhY2FkZW15LmNhL2FwaS9kYXNoYm9hcmQvbG9naW4iLCJpYXQiOjE3MzA3MjM3MTEsIm5iZiI6MTczMDcyMzcxMSwianRpIjoiWDFHQmY3aHBKN2p4djRWYSIsInN1YiI6IjE5MjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.VI6pqezNvKVTpm0zQesxU0KCBLXPMgWwYGcFAwNmKZo';
+  const courseApiUrl = '/mobile/courses/paginated/list?page=1';
+ 
   const navigate = useNavigate();
 
   const handlenavigate = () => {
@@ -69,9 +77,6 @@ const CourseSlider = () => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(courseApiUrl, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
         });
         const data = response.data.data
           .map((course) => ({
@@ -118,7 +123,8 @@ const App = () => {
   return (
     <div>
        <Navbar/>
-      <CarouselFadeExample />
+      {/* <CarouselFadeExample /> */}
+      <CarouselFadeExample images={images} />
       <CourseSlider />
       <Footer/>
       <div className="CopyRight  bg-danger text-white text-center py-3">

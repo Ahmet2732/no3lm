@@ -132,15 +132,13 @@ const CourseGrid = () => {
   const navigate = useNavigate();
   
 
-  const token = localStorage.getItem('accessToken');
+
   
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(`/mobile/courses/paginated/list?page=${currentPage}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+       
         });
         const data = response.data.data.map((course) => ({
           id: course.id,

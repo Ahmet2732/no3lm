@@ -13,12 +13,12 @@ const CourseDetailsPage = () => {
   const [enrollmentMessage, setEnrollmentMessage] = useState('');
   const [cartMessage, setCartMessage] = useState('');
   const { cartItems, addToCart } = useContext(CartContext);
-  const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2Rldi5jaGFtcGlvbnNhY2FkZW15LmNhL2FwaS9kYXNoYm9hcmQvbG9naW4iLCJpYXQiOjE3MzA3MjM3MTEsIm5iZiI6MTczMDcyMzcxMSwianRpIjoiWDFHQmY3aHBKN2p4djRWYSIsInN1YiI6IjE5MjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.VI6pqezNvKVTpm0zQesxU0KCBLXPMgWwYGcFAwNmKZo';
+  const token = localStorage.getItem('accessToken');
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
       try {
-        const response = await axios.get(`https://dev.championsacademy.ca/api/mobile/courses/single/course/${id}`, {
+        const response = await axios.get(`/mobile/courses/single/course/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -40,7 +40,7 @@ const CourseDetailsPage = () => {
 
     try {
       const response = await axios.post(
-        'https://dev.championsacademy.ca/api/mobile/users/courses/enroll',
+        '/mobile/users/courses/enroll',
         { course_id: course.id },
         {
           headers: {
@@ -75,7 +75,7 @@ const CourseDetailsPage = () => {
 
     try {
       const response = await axios.post(
-        'https://dev.championsacademy.ca/api/cart/add',
+        '/cart/add',
         { model_id: course.id, model_name: 'Course' },
         {
           headers: {
