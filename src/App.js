@@ -5,14 +5,14 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import UserContextProvider from './Context/userContext';
 import './utilites/Global-Api'
-import Login from './components/login/login';
-import Home from './components/home/home';
-import CourseGrid from './components/AllCourses/AllCourses';
-import CourseDetailsPage from './components/courseDetails/courseDetails';
-import Cart from './components/Cart/Cart';
+import Home from './Pages/main';
+import CourseDetailsPage from './Pages/courseDetails';
+import Cart from './Pages/Cart';
 import Footer from './components/ui/Footer/Footer';
 import { CartProvider } from './Context/CartContext';
 import Navbar from './components/ui/Navbar/Navbar';
+import CourseGrid from './Pages/allcourses';
+import Login from './Pages/login';
 
 
 // Define your routes
